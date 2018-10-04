@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+
+    <title th:utext="后台管理"></title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" th:href="@{../vendors/bootstrap/css/bootstrap.min.css}"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{../vendors/font-awesome/css/font-awesome.min.css}"/>
+    <!-- iCheck -->
+    <link rel="stylesheet" th:href="@{../vendors/iCheck/skins/flat/green.css}"/>
+
+    <!-- bootstrap-progressbar -->
+    <link rel="stylesheet" th:href="@{../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css}"/>
+    <!-- bootstrap-daterangepicker -->
+    <link rel="stylesheet" th:href="@{../vendors/bootstrap-daterangepicker/daterangepicker.css}"/>
+
+    <!-- dataTable -->
+    <link th:href="@{../vendors/dataTables/css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Custom Theme Style -->
+    <link rel="stylesheet" th:href="@{../css/custom.min.css}"/>
+</head>
+
+<body class="nav-md">
+
+<!-- create category modal -->
+<div id="createCategoryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createCategoryModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="createCategoryModalLabel">新建类别</h4>
+            </div>
+            <div class="modal-body">
+
+                <div style="padding: 5px 20px;">
+                    <form id="createCategoryForm" method="post" th:action="@{category/createCategory}"
+                          data-parsley-validate=""
+                          class="form-horizontal form-label-left" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="categoryName">类型名称 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="categoryName" name="categoryName"
+                                       required="required"
+                                       data-toggle="tooltip" data-placement="right" title="请输入类型名称"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="categoryDisplayName">显示类型名称 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="categoryDisplayName" name="categoryDisplayName"
+                                       required="required"
+                                       data-toggle="tooltip" data-placement="right" title="请输入显示类型名称"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary antosubmit2" id="submitCreateCategoryForm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /create category modal-->
+
+<!-- edit category modal -->
+<div id="editCategoryModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="editCategoryModalLabel">编辑类型信息</h4>
+            </div>
+            <div class="modal-body">
+
+                <div style="padding: 5px 20px;">
+                    <form id="editCategoryForm" method="post" th:action="@{category/modifyCategory}"
+                          data-parsley-validate=""
+                          class="form-horizontal form-label-left" role="form">
+                        <input type="hidden" id="editCategoryId" name="id" value=""/>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editCategoryName">类型名称 <span
+                                    class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editCategoryName" name="categoryName"
+                                       required="required"
+                                       data-toggle="tooltip" data-placement="right" title="请输入类型名称"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editCategoryName">显示的类型名称 <span
+                                    class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editCategoryDisplayName" name="categoryName"
+                                       required="required"
+                                       data-toggle="tooltip" data-placement="right" title="请输入显示类型名称"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary antosubmit2" id="submitEditCategoryForm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /edit category modal-->
+
+<!-- tip modal -->
+<div id="tipModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tipModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close close-tip" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="tipModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px 20px;">
+                    <span id="tip"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2 close-tip" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /tip modal-->
+
+<!-- loading modal -->
+<div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="loadingModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px 20px;">
+                    <span id="loading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /loading modal-->
+
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a th:href="@{index}" class="site_title"><i class="fa fa-paw"></i> <span
+                            th:utext="后台管理"></span></a>
+                </div>
+
+                <div class="clearfix"></div>
+                <br/>
+
+                <!-- sidebar menu -->
+                <div th:replace="admin/sidebar :: sidebar"></div>
+                <!-- /sidebar menu -->
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div th:replace="admin/topnav :: topnav"></div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="row x_title">
+                        <div class="col-md-6">
+                            <h3 th:utext="后台管理"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>类型信息</h2>
+                            <div class="nav navbar-right panel_toolbox">
+                                <button id="editCategoryBtn" class="btn btn-primary" disabled="disabled">修改</button>
+                                <button id="deleteCategoryBtn" class="btn btn-danger" disabled="disabled">删除</button>
+                                <p id="createCategoryBtn" class="btn btn-dark"  role="button">添加类型</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <table id="categoryTable" class="table table-bordered jambo_table">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>显示的名称</th>
+                                    <th>类型名称</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!--/*@thymesVar id="airlineCompanies" type="java.util.List<org.neu.cabs.orm.Airlinecategory>"*/-->
+                                <tr th:each="categories:${categories}">
+                                    <td th:text="${categories.id}"></td>
+                                    <td th:text="${categories.displayName}"></td>
+                                    <td th:text="${categories.name}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer th:replace="admin/footer :: copy">
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<!-- jQuery -->
+<script th:src="@{../vendors/jquery/jquery.min.js}"></script>
+<script th:src="@{../vendors/jquery/jquery.form.js}"></script>
+<!-- Bootstrap -->
+<script th:src="@{../vendors/bootstrap/js/bootstrap.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{../vendors/fastclick/fastclick.js}"></script>
+<!-- bootstrap-progressbar -->
+<script th:src="@{../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
+<!-- iCheck -->
+<script th:src="@{../vendors/iCheck/icheck.min.js}"></script>
+
+<!-- bootstrap-daterangepicker -->
+<script th:src="@{../vendors/moment/moment.min.js}"></script>
+<script th:src="@{../vendors/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+<!-- dataTable -->
+<script th:src="@{../vendors/dataTables/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{../vendors/dataTables/js/dataTables.bootstrap.min.js}"></script>
+
+<!-- Custom Theme Scripts -->
+<script th:src="@{../js/custom.min.js}"></script>
+<script th:src="@{../js/manage.js}"></script>
+
+<script th:inline="javascript">
+
+    $(function () {
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        console.log(header + '=' + token);
+
+        var $categoryTable = $("#categoryTable");
+        var $categoryName = $("#categoryName");
+        var $categoryDisplayName = $("#categoryDisplayName")
+        var $categoryCode = $("#categoryCode");
+        var $establishTime = $("#establishTime");
+        var $createCategoryForm = $("#createCategoryForm");
+        var $createCategoryBtn = $("#createCategoryBtn");
+        var $editCategoryBtn = $("#editCategoryBtn");
+        var $deleteCategoryBtn = $("#deleteCategoryBtn");
+        var $createCategoryModal = $("#createCategoryModal");
+        var $submitCreateCategoryForm = $("#submitCreateCategoryForm");
+        var $tipModal = $("#tipModal");
+        var $tip = $("#tip");
+        var $editCategoryForm = $("#editCategoryForm");
+        var $submitEditCategoryForm = $("#submitEditCategoryForm");
+        var $editCategoryId = $("#editCategoryId");
+        var $editCategoryName = $("#editCategoryName");
+        var $editCategoryDisplayName = $("#editCategoryDisplayName");
+        var $editCategoryCode = $("#editCategoryCode");
+        var $editEstablishTime = $("#editEstablishTime");
+        var $editCategoryModal = $("#editCategoryModal");
+        var $loadingModal = $("#loadingModal");
+        var $loading = $("#loading");
+
+        var table = $categoryTable.DataTable();
+
+        function checkCreateCategoryForm() {
+            var categoryName = $categoryName.val();
+            var categoryDisplayName = $categoryDisplayName.val();
+            var serviceResult = true;
+            if (categoryName == "" || categoryName == null) {
+                $categoryName.attr('title', "请输入类型名称").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            } else if (categoryName.length > 50) {
+                $categoryName.attr('title', "类型名称长度不能超过50").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }
+            if (categoryDisplayName == "" || categoryDisplayName == null) {
+                $categoryName.attr('title', "请输入显示类型名称").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            } else if (categoryDisplayName.length > 50) {
+                $categoryName.attr('title', "显示类型名称长度不能超过50").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }
+
+            return serviceResult;
+        }
+
+
+        function checkeditCategoryForm() {
+            var categoryName = $editCategoryName.val();
+            var categoryDisplayName = $editCategoryDisplayName.val();
+            var serviceResult = true;
+            if ("" == categoryName || categoryName == null) {
+                $editCategoryName.attr('title', "请输入类型名称").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            } else if (categoryName.length > 50) {
+                $editCategoryName.attr('title', "类型名称长度不能超过50").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }
+            if (categoryDisplayName == "" || categoryDisplayName == null) {
+                $categoryName.attr('title', "请输入显示类型名称").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            } else if (categoryDisplayName.length > 50) {
+                $categoryName.attr('title', "显示类型名称长度不能超过50").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }
+            return serviceResult;
+        }
+
+        function addRow(data) {
+            table.row.add([
+                data.categoryName,
+                data.categoryDisplayName
+
+            ]).draw();
+            $("#categoryTable tbody td:contains('" + data.categoryName + "')").parent().attr('value', data.id);
+        }
+
+        var createCategoryUrl = $createCategoryForm.attr("action");
+        var editCategoryUrl = $editCategoryForm.attr("action");
+
+        $createCategoryBtn.on('click', function () {
+            $createCategoryForm.resetForm();
+            $createCategoryModal.modal({
+                keyboard: false,
+                backdrop: false
+            });
+        });
+
+        $submitCreateCategoryForm.on("click", function () {
+            if (!checkCreateCategoryForm()) {
+                return false;
+            }
+
+            $loading.text('正在创建类型，请稍后...');
+            $loadingModal.modal('toggle');
+
+            var data = JSON.stringify(getFormJson("createCategoryForm"));
+            console.log(data);
+            console.log(createCategoryUrl);
+
+            $.ajax({
+                type: 'POST',
+                url: createCategoryUrl,
+                data: data,
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    if (data.successful == true) {
+                        $createCategoryModal.modal('hide');
+                        addRow(data.object);
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    } else {
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    $tip.text('信息有误，请重试');
+                    $tipModal.modal('toggle');
+                }
+            });
+        });
+
+        $submitEditCategoryForm.on('click', function () {
+            if (!checkeditCategoryForm()) {
+                return false;
+            }
+
+            $loading.text('正在修改类型信息，请稍后...');
+            $loadingModal.modal('toggle');
+
+            var data = JSON.stringify(getFormJson("editCategoryForm"));
+            console.log(data);
+            console.log(createCategoryUrl);
+
+            $.ajax({
+                type: 'POST',
+                url: editCategoryUrl,
+                data: data,
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    if (data.successful == true) {
+                        $editCategoryModal.modal('hide');
+                        $editCategoryBtn.attr('disabled', 'true');
+                        $deleteCategoryBtn.attr('disabled', 'true');
+                        table.row('.selected').remove().draw(false);
+                        addRow(data.object);
+                        $tip.text('类型信息修改成功');
+                        $tipModal.modal('toggle');
+                    } else {
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    }
+                },
+                error: function (data) {
+                    $loadingModal.modal('toggle');
+                    $tip.text('信息有误,请重试');
+                    $tipModal.modal('toggle');
+                }
+            });
+        });
+
+        $("#categoryTable tbody").on('click', 'tr[value]', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                $editCategoryBtn.attr('disabled', 'true');
+                $deleteCategoryBtn.attr('disabled', 'true');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                $editCategoryBtn.removeAttr('disabled');
+                $deleteCategoryBtn.removeAttr('disabled');
+            }
+        });
+
+        $deleteCategoryBtn.on('click', function () {
+            if (confirm("确认删除当前选中的类型吗？")) {
+                var id = parseInt(table.$('tr.selected').attr('value'));
+                $.ajax({
+                    type: 'POST',
+                    url: 'category/deleteCategory',
+                    data: {
+                        categoryId: id
+                    },
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.successful == true) {
+                            table.row('.selected').remove().draw(false);
+                            $editCategoryBtn.attr('disabled', 'true');
+                            $deleteCategoryBtn.attr('disabled', 'true');
+                            $tip.text(data.msg);
+                            $tipModal.modal('toggle');
+                        } else {
+                            $tip.text(data.msg);
+                            $tipModal.modal('toggle');
+                        }
+                    },
+                    error: function (data) {
+                        $tip.text(data.message);
+                        $tipModal.modal('toggle');
+                    }
+                });
+            }
+        });
+
+        $editCategoryBtn.on('click', function () {
+            $editCategoryForm.resetForm();
+            $editCategoryId.val(table.$('tr.selected').attr('value'));
+            $editCategoryName.val($categoryTable.find("tr.selected td:eq(0)").text());
+            $editCategoryDisplayName.val($categoryTable.find("tr.selected td:eq(1)").text());
+            console.log($editCategoryId.val());
+            $editCategoryModal.modal({
+                keyboard: false,
+                backdrop: false
+            });
+        });
+
+        $loadingModal.modal({
+            show: false,
+            keyboard: false,
+            backdrop: false
+        });
+
+        $createCategoryModal.on('hidden.bs.modal', function () {
+            $categoryName.tooltip('hide');
+            $categoryCode.tooltip('hide');
+            $establishTime.tooltip('hide');
+        });
+        $editCategoryModal.on('hidden.bs.modal', function () {
+            $editCategoryName.tooltip('hide');
+            $editCategoryCode.tooltip('hide');
+            $editEstablishTime.tooltip('hide');
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

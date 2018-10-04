@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8"/>
+<body>
+<div id="sidebar-menu" class="" th:fragment="sidebar">
+    <div class="menu_section">
+        <ul class="nav side-menu">
+            <li><a th:href="@{index}"><i class="fa fa-home"></i></a> 首页 </li>
+            <li><a th:href="@{blog}"><i class="fa fa-rmb"></i></a> 博客管理 </li>
+            <li><a th:href="@{category}"><i class="fa fa-building"></i></a> 类别管理 </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
