@@ -31,115 +31,6 @@
 
 <body class="nav-md">
 
-<!-- create company modal -->
-<div id="createCompanyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createCompanyModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="createCompanyModalLabel">新建航空公司</h4>
-            </div>
-            <div class="modal-body">
-
-                <div style="padding: 5px 20px;">
-                    <form id="createCompanyForm" method="post" th:action="@{company/createCompany}"
-                          data-parsley-validate=""
-                          class="form-horizontal form-label-left" role="form">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="companyName">公司名称 <span class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="companyName" name="companyName"
-                                       required="required"
-                                       data-toggle="tooltip" data-placement="right" title="请输入公司名称"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="companyCode">公司代码 <span class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" style="text-transform: uppercase" class="form-control"
-                                       id="companyCode" name="companyCode" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="请输入公司代码"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="establishTime">成立时间 <span
-                                    class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control" id="establishTime" required="required"
-                                       name="establishTime"
-                                       value="" data-toggle="tooltip" data-placement="right" title="请选择成立时间"/>
-                                <!--<input type="hidden" id="establishTime" name="establishTime" />-->
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary antosubmit2" id="submitCreateCompanyForm">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /create company modal-->
-
-<!-- edit company modal -->
-<div id="editCompanyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editCompanyModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="editCompanyModalLabel">编辑航空公司信息</h4>
-            </div>
-            <div class="modal-body">
-
-                <div style="padding: 5px 20px;">
-                    <form id="editCompanyForm" method="post" th:action="@{company/modifyCompany}"
-                          data-parsley-validate=""
-                          class="form-horizontal form-label-left" role="form">
-                        <input type="hidden" id="editCompanyId" name="id" value=""/>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="editCompanyName">公司名称 <span
-                                    class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="editCompanyName" name="companyName"
-                                       required="required"
-                                       data-toggle="tooltip" data-placement="right" title="请输入公司名称"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="editCompanyCode">公司代码 <span
-                                    class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" maxlength="3" style="text-transform: uppercase" class="form-control" id="editCompanyCode"
-                                       name="companyCode" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="请输入公司代码"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label" for="editEstablishTime">成立时间 <span
-                                    class="required">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control" id="editEstablishTime" required="required"
-                                       name="establishTime"
-                                       value="" data-toggle="tooltip" data-placement="right" title="请选择成立时间"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary antosubmit2" id="submitEditCompanyForm">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /edit company modal-->
 
 <!-- tip modal -->
 <div id="tipModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tipModalLabel" aria-hidden="true">
@@ -223,7 +114,8 @@
                             <div class="nav navbar-right panel_toolbox">
                                 <button id="editBlogBtn" class="btn btn-primary" disabled="disabled">修改</button>
                                 <button id="deleteBlogBtn" class="btn btn-danger" disabled="disabled">删除</button>
-                                <p id="createBlogBtn" class="btn btn-dark" th:href="@{/admin/blog/write}" role="button">写博客</p>
+                                <a id="createBlogBtn" class="btn btn-dark" th:href="@{/admin/blog/write}" role="button">写博客</a>
+                                <!--<button id="writeBlogBtn" class="btn btn-dark" th:href="@{blog/write}">写博客</button>-->
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -239,7 +131,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <!--/*@thymesVar id="airlineCompanies" type="java.util.List<org.neu.cabs.orm.AirlineCompany>"*/-->
+                                <!--/*@thymesVar id="airlineCompanies" type="java.util.List<org.neu.cabs.orm.Airlineblog>"*/-->
                                 <tr th:each="articles:${articles}">
                                     <td th:text="${articles.id}"></td>
                                     <td th:text="${articles.title}"></td>
@@ -291,245 +183,62 @@
 
     $(function () {
 
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
+        var $blogTable = $("#blogTable");
+        //var $createblogForm = $("#createblogForm");
+        var $writeBlogBtn = $("#writeBlogBtn");
+        var $editBlogBtn = $("#editBlogBtn");
+        var $deleteBlogBtn = $("#deleteBlogBtn");
 
-        console.log(header + '=' + token);
-
-        var $companyTable = $("#companyTable");
-        var $companyName = $("#companyName");
-        var $companyCode = $("#companyCode");
-        var $establishTime = $("#establishTime");
-        var $createCompanyForm = $("#createCompanyForm");
-        var $createCompanyBtn = $("#createCompanyBtn");
-        var $editCompanyBtn = $("#editCompanyBtn");
-        var $deleteCompanyBtn = $("#deleteCompanyBtn");
-        var $createCompanyModal = $("#createCompanyModal");
-        var $submitCreateCompanyForm = $("#submitCreateCompanyForm");
         var $tipModal = $("#tipModal");
         var $tip = $("#tip");
-        var $editCompanyForm = $("#editCompanyForm");
-        var $submitEditCompanyForm = $("#submitEditCompanyForm");
-        var $editCompanyId = $("#editCompanyId");
-        var $editCompanyName = $("#editCompanyName");
-        var $editCompanyCode = $("#editCompanyCode");
-        var $editEstablishTime = $("#editEstablishTime");
-        var $editCompanyModal = $("#editCompanyModal");
         var $loadingModal = $("#loadingModal");
         var $loading = $("#loading");
 
-        var table = $companyTable.DataTable();
-
-        function checkCreateCompanyForm() {
-            var companyName = $companyName.val();
-            var companyCode = $companyCode.val();
-            var establishTime = $establishTime.val();
-            var serviceResult = true;
-            if (companyName == "" || companyName == null) {
-                $companyName.attr('title', "请输入公司名称").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            } else if (companyName.length > 50) {
-                $companyName.attr('title', "公司名称长度不能超过50").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            }
-            if (companyCode == "" || companyCode == null) {
-                $companyCode.attr('title', "请输入公司代码").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            } else if (companyCode.length != 2) {
-                $companyCode.attr('title', "公司代码应为2位").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            }else{
-                var reg= /^[A-Za-z]+$/;
-                if(!reg.test(companyCode)){
-                    $companyCode.attr('title', "公司代码应为2位字母").tooltip('fixTitle').tooltip('show');
-                    serviceResult = false;
-                }
-            }
-            if (establishTime == "" || establishTime == null) {
-                $establishTime.attr('title', "请选择成立日期").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            } else {
-                var selectDay = new Date(establishTime);
-                var nowDay = new Date();
-                if (selectDay > nowDay) {
-                    $establishTime.attr('title', "建立日期有误请重试").tooltip('fixTitle').tooltip('show');
-                    serviceResult = false;
-                }
-            }
-            return serviceResult;
-        }
-
-
-        function checkEditCompanyForm() {
-            var companyName = $editCompanyName.val();
-            var companyCode = $editCompanyCode.val();
-            var establishTime = $editEstablishTime.val();
-            var serviceResult = true;
-            if (companyName == "" || companyName == null) {
-                $editCompanyName.attr('title', "请输入公司名称").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            } else if (companyName.length > 50) {
-                $editCompanyName.attr('title', "公司名称长度不能超过50").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            }
-            if (companyCode == "" || companyCode == null) {
-                $editCompanyCode.attr('title', "请输入公司代码").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            } else if (companyCode.length != 2) {
-                $editCompanyCode.attr('title', "公司代码应为2位").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            }else{
-                var reg= /^[A-Za-z]+$/;
-                if(!reg.test(companyCode)){
-                    $editCompanyCode.attr('title', "公司代码应为2位字母").tooltip('fixTitle').tooltip('show');
-                    serviceResult = false;
-                }
-            }
-            if (establishTime == "" || establishTime == null) {
-                $editEstablishTime.attr('title', "请选择成立日期").tooltip('fixTitle').tooltip('show');
-                serviceResult = false;
-            } else {
-                var selectDay = new Date(establishTime);
-                var nowDay = new Date();
-                if (selectDay > nowDay) {
-                    $editEstablishTime.attr('title', "建立日期有误请重试").tooltip('fixTitle').tooltip('show');
-                    serviceResult = false;
-                }
-            }
-            return serviceResult;
-        }
+        var table = $blogTable.DataTable();
 
         function addRow(data) {
             table.row.add([
-                data.companyName,
-                data.companyCode,
+                data.blogName,
+                data.blogCode,
                 formatDate(data.establishTime),
                 data.airplanes.length
             ]).draw();
-            $("#companyTable tbody td:contains('" + data.companyName + "')").parent().attr('value', data.id);
+            $("#blogTable tbody td:contains('" + data.blogName + "')").parent().attr('value', data.id);
         }
 
-        var createCompanyUrl = $createCompanyForm.attr("action");
-        var editCompanyUrl = $editCompanyForm.attr("action");
+        var writeBlogUrl = $writeBlogBtn.attr("action");
+        //var editBlogUrl = $editBlogForm.attr("action");
 
-        $createCompanyBtn.on('click', function () {
-            $createCompanyForm.resetForm();
-            $createCompanyModal.modal({
-                keyboard: false,
-                backdrop: false
-            });
-        });
-
-        $submitCreateCompanyForm.on("click", function () {
-            if (!checkCreateCompanyForm()) {
-                return false;
-            }
-
-            $loading.text('正在创建航空公司，请稍后...');
-            $loadingModal.modal('toggle');
-
-            var data = JSON.stringify(getFormJson("createCompanyForm"));
-            console.log(data);
-            console.log(createCompanyUrl);
-
-            $.ajax({
-                type: 'POST',
-                url: createCompanyUrl,
-                data: data,
-                dataType: 'json',
-                contentType: 'application/json; charset=UTF-8',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (data) {
-                    console.log(data);
-                    $loadingModal.modal('toggle');
-                    if (data.successful == true) {
-                        $createCompanyModal.modal('hide');
-                        addRow(data.object);
-                        $tip.text(data.msg);
-                        $tipModal.modal('toggle');
-                    } else {
-                        $tip.text(data.msg);
-                        $tipModal.modal('toggle');
-                    }
-                },
-                error: function (data) {
-                    console.log(data);
-                    $loadingModal.modal('toggle');
-                    $tip.text('信息有误，请重试');
-                    $tipModal.modal('toggle');
-                }
-            });
-        });
-
-        $submitEditCompanyForm.on('click', function () {
-            if (!checkEditCompanyForm()) {
-                return false;
-            }
-
-            $loading.text('正在修改航空公司信息，请稍后...');
-            $loadingModal.modal('toggle');
-
-            var data = JSON.stringify(getFormJson("editCompanyForm"));
-            console.log(data);
-            console.log(createCompanyUrl);
-
-            $.ajax({
-                type: 'POST',
-                url: editCompanyUrl,
-                data: data,
-                dataType: 'json',
-                contentType: 'application/json; charset=UTF-8',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (data) {
-                    console.log(data);
-                    $loadingModal.modal('toggle');
-                    if (data.successful == true) {
-                        $editCompanyModal.modal('hide');
-                        $editCompanyBtn.attr('disabled', 'true');
-                        $deleteCompanyBtn.attr('disabled', 'true');
-                        table.row('.selected').remove().draw(false);
-                        addRow(data.object);
-                        $tip.text('航空公司信息修改成功');
-                        $tipModal.modal('toggle');
-                    } else {
-                        $tip.text(data.msg);
-                        $tipModal.modal('toggle');
-                    }
-                },
-                error: function (data) {
-                    $loadingModal.modal('toggle');
-                    $tip.text('信息有误,请重试');
-                    $tipModal.modal('toggle');
-                }
-            });
-        });
-
-        $("#companyTable tbody").on('click', 'tr[value]', function () {
+        // $writeBlogBtn.on("click", function () {
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: writeBlogUrl,
+        //         data: {},
+        //         dataType:'json'
+        //     });
+        // });
+        $("#blogTable tbody").on('click', 'tr[value]', function () {
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
-                $editCompanyBtn.attr('disabled', 'true');
-                $deleteCompanyBtn.attr('disabled', 'true');
+                $editBlogBtn.attr('disabled', 'true');
+                $deleteBlogBtn.attr('disabled', 'true');
             }
             else {
                 table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
-                $editCompanyBtn.removeAttr('disabled');
-                $deleteCompanyBtn.removeAttr('disabled');
+                $editBlogBtn.removeAttr('disabled');
+                $deleteBlogBtn.removeAttr('disabled');
             }
         });
 
-        $deleteCompanyBtn.on('click', function () {
+        $deleteBlogBtn.on('click', function () {
             if (confirm("确认删除当前选中的公司吗？")) {
                 var id = parseInt(table.$('tr.selected').attr('value'));
                 $.ajax({
                     type: 'POST',
-                    url: 'company/deleteCompany',
+                    url: 'blog/deleteBlog',
                     data: {
-                        companyId: id
+                        blogId: id
                     },
                     dataType: 'json',
                     beforeSend: function (xhr) {
@@ -539,8 +248,8 @@
                         console.log(data);
                         if (data.successful == true) {
                             table.row('.selected').remove().draw(false);
-                            $editCompanyBtn.attr('disabled', 'true');
-                            $deleteCompanyBtn.attr('disabled', 'true');
+                            $editBlogBtn.attr('disabled', 'true');
+                            $deleteBlogBtn.attr('disabled', 'true');
                             $tip.text(data.msg);
                             $tipModal.modal('toggle');
                         } else {
@@ -556,36 +265,13 @@
             }
         });
 
-        $editCompanyBtn.on('click', function () {
-            $editCompanyForm.resetForm();
-            $editCompanyId.val(table.$('tr.selected').attr('value'));
-            $editCompanyName.val($companyTable.find("tr.selected td:eq(0)").text());
-            $editCompanyCode.val($companyTable.find("tr.selected td:eq(1)").text());
-            $editEstablishTime.val($companyTable.find("tr.selected td:eq(2)").text());
-            console.log($editCompanyId.val());
-            $editCompanyModal.modal({
-                keyboard: false,
-                backdrop: false
-            });
-        });
+
 
         $loadingModal.modal({
             show: false,
             keyboard: false,
             backdrop: false
         });
-
-        $createCompanyModal.on('hidden.bs.modal', function () {
-            $companyName.tooltip('hide');
-            $companyCode.tooltip('hide');
-            $establishTime.tooltip('hide');
-        });
-        $editCompanyModal.on('hidden.bs.modal', function () {
-            $editCompanyName.tooltip('hide');
-            $editCompanyCode.tooltip('hide');
-            $editEstablishTime.tooltip('hide');
-        });
-
     });
 
 </script>

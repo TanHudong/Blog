@@ -1,5 +1,8 @@
 package com.thdblog.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,6 +16,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "comments")
+@NoArgsConstructor
+@Setter
+@Getter
 public class Comments {
 
     @Id
@@ -30,35 +36,4 @@ public class Comments {
     @Column(name = "comment", columnDefinition = "text")
     private String comment;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Integer getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
-    }
-
-    public String getCommIp() {
-        return commIp;
-    }
-
-    public void setCommIp(String commIp) {
-        this.commIp = commIp;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 }

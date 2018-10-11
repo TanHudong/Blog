@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.persistence.Column;
+
 import java.text.ParseException;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class CategoryManageController {
     public String index(Model model){
         List<Category> categories = categoryService.list();
         model.addAttribute("categories",categories);
-        return "/admin/category_manage";
+        return "admin/category_manage";
     }
 
     @RequestMapping(value = "/createCategory",method = RequestMethod.POST)

@@ -45,6 +45,7 @@ public class BlogController {
         List<Category> categories = categoryService.list();
         model.addAttribute("categories",categories);
         model.addAttribute("article",new Article());
+        System.out.println("点击了写博客");
         return "admin/write";
     }
 

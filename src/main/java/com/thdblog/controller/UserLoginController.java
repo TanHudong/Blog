@@ -52,7 +52,7 @@ public class UserLoginController {
             return "redirect:/admin/index";
         }else {
             model.addAttribute("error","用户名或密码错误");
-            System.out.println("failed");
+
 
             return "admin/login";
         }

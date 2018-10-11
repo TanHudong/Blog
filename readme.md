@@ -27,3 +27,14 @@ admin/write.html中<br />
 
 #Lombok
 在项目中使用Lombok可以减少很多重复代码的书写。比如说getter/setter/toString/equals/hascode等方法的编写 
+
+
+
+#/admin/write 报错
+        2018-10-09 22:05:04.486 ERROR 6704 --- [nio-8080-exec-7] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8080-exec-7] Exception processing template "admin/write": Error during execution of processor 'org.thymeleaf.spring4.processor.attr.SpringInputGeneralFieldAttrProcessor' (admin/write)
+        2018-10-09 22:05:04.492 ERROR 6704 --- [nio-8080-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.thymeleaf.exceptions.TemplateProcessingException: Error during execution of processor 'org.thymeleaf.spring4.processor.attr.SpringInputGeneralFieldAttrProcessor' (admin/write)] with root cause
+
+
+**解决方法**：<br />
+出现原因： 因为在再表单提交中使用了 th:object="${article}", 所以需要在使用时，传入一个Article对象。
+否则将会报错。

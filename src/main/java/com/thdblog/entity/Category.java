@@ -1,9 +1,6 @@
 package com.thdblog.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,10 +13,11 @@ import javax.persistence.*;
  * @Description
  */
 @Entity
+@Table(name = "category")
 @Setter
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor
-@Table(name = "category")
 public class Category {
 
     @Id

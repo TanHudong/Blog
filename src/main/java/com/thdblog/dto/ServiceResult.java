@@ -1,6 +1,7 @@
 package com.thdblog.dto;
 
 import javax.persistence.ManyToOne;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,6 +18,7 @@ public class ServiceResult {
     public ServiceResult(boolean successful,String message,Object... extras) {
         this.successful = successful;
         this.message = message;
+        this.extra = new HashMap<>();
         for (int i = 0; i < extras.length; i+=2) {
             this.extra.put(extras[i].toString(), extras[i + 1]);
         }

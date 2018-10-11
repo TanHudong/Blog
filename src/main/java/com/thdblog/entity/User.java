@@ -1,5 +1,8 @@
 package com.thdblog.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,6 +15,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user")
+@NoArgsConstructor
+@Setter
+@Getter
 public class User {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -25,27 +31,4 @@ public class User {
     @Column(name = "password",nullable = false,length = 32)
     private String password;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

@@ -6,7 +6,8 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
+    <!--<meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
 
     <title th:utext="后台管理"></title>
 
@@ -63,6 +64,7 @@
                                        data-toggle="tooltip" data-placement="right" title="请输入显示类型名称"/>
                             </div>
                         </div>
+                        <input name="_csrf" type="hidden" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
                     </form>
                 </div>
             </div>
@@ -275,9 +277,7 @@
 
         var $categoryTable = $("#categoryTable");
         var $categoryName = $("#categoryName");
-        var $categoryDisplayName = $("#categoryDisplayName")
-        var $categoryCode = $("#categoryCode");
-        var $establishTime = $("#establishTime");
+        var $categoryDisplayName = $("#categoryDisplayName");
         var $createCategoryForm = $("#createCategoryForm");
         var $createCategoryBtn = $("#createCategoryBtn");
         var $editCategoryBtn = $("#editCategoryBtn");
@@ -288,11 +288,8 @@
         var $tip = $("#tip");
         var $editCategoryForm = $("#editCategoryForm");
         var $submitEditCategoryForm = $("#submitEditCategoryForm");
-        var $editCategoryId = $("#editCategoryId");
         var $editCategoryName = $("#editCategoryName");
         var $editCategoryDisplayName = $("#editCategoryDisplayName");
-        var $editCategoryCode = $("#editCategoryCode");
-        var $editEstablishTime = $("#editEstablishTime");
         var $editCategoryModal = $("#editCategoryModal");
         var $loadingModal = $("#loadingModal");
         var $loading = $("#loading");
@@ -381,9 +378,7 @@
                 data: data,
                 dataType: 'json',
                 contentType: 'application/json; charset=UTF-8',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
+
                 success: function (data) {
                     console.log(data);
                     $loadingModal.modal('toggle');
@@ -519,13 +514,11 @@
 
         $createCategoryModal.on('hidden.bs.modal', function () {
             $categoryName.tooltip('hide');
-            $categoryCode.tooltip('hide');
-            $establishTime.tooltip('hide');
+            $categoryDisplayName.tooltip('hide');
         });
         $editCategoryModal.on('hidden.bs.modal', function () {
             $editCategoryName.tooltip('hide');
-            $editCategoryCode.tooltip('hide');
-            $editEstablishTime.tooltip('hide');
+            $categoryDisplayName.tooltip('hide');
         });
 
     });
