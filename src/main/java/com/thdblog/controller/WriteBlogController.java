@@ -1,5 +1,6 @@
 package com.thdblog.controller;
 
+import com.thdblog.dto.ResponseResult;
 import com.thdblog.entity.Article;
 import com.thdblog.entity.Category;
 import com.thdblog.service.ArticleService;
@@ -35,11 +36,13 @@ public class WriteBlogController {
         return "admin/write";
     }
 
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public String save(Article article){
+    @RequestMapping(value = "/submit",method = RequestMethod.POST)
+    public String submit(Article article){
         // 获取到文章的类型
         String name = article.getCategory().getName();
+        System.out.println("categotyNmae::::::"+name);
         Category category = categoryService.findByName(name);
+        System.out.println("category::::::"+category);
         article.setCategory(category);
         // 文章发布的时间
         article.setDate(simpleDateFormat.format(new Date()));
@@ -53,6 +56,31 @@ public class WriteBlogController {
         // 第一次默认都是为0
         article.setNumberOfViews(0);
         articleService.save(article);
-        return "redirect:/admin/index";
+        return "redirect:/admin/blog";
+    }
+
+    @RequestMapping(value = "/save")
+    public String save(Article article){
+
+        System.out.println("点击了发布键！");
+        // 获取到文章的类型
+        String name = article.getCategory().getName();
+        System.out.println("categotyNmae::::::"+name);
+        Category category = categoryService.findByName(name);
+        System.out.println("category::::::"+category);
+        article.setCategory(category);
+        // 文章发布的时间
+        article.setDate(simpleDateFormat.format(new Date()));
+        if (article.getContent().length()>40){
+            // 如果文章篇幅长度大于40，取前40个字符为文章摘要
+            article.setSummary(article.getContent().substring(0,40));
+        }else {
+            // 文章篇幅长度小于40，取全部文字为文章篇幅
+            article.setSummary(article.getContent());
+        }
+        // 第一次默认都是为0
+        article.setNumberOfViews(0);
+        articleService.save(article);
+        return "redirect:/admin/write";
     }
 }

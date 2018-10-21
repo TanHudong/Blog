@@ -132,12 +132,14 @@
                                 </thead>
                                 <tbody>
                                 <!--/*@thymesVar id="airlineCompanies" type="java.util.List<org.neu.cabs.orm.Airlineblog>"*/-->
-                                <tr th:each="articles:${articles}">
+                                <tr th:each="articles:${articles}" th:value="${articles.id}">
                                     <td th:text="${articles.id}"></td>
                                     <td th:text="${articles.title}"></td>
                                     <td th:text="${articles.summary}"></td>
                                     <td th:text="${articles.date}"></td>
                                     <td th:text="${articles.numberOfViews}"></td>
+                                    <!--<td><a th:href="@{'/blog/deleteArticle/'+${articles.id}}">修改</a></td>-->
+                                    <!--<td><a th:href="@{/blog/del}"></a></td>-->
                                 </tr>
                                 </tbody>
                             </table>
@@ -196,15 +198,6 @@
 
         var table = $blogTable.DataTable();
 
-        function addRow(data) {
-            table.row.add([
-                data.blogName,
-                data.blogCode,
-                formatDate(data.establishTime),
-                data.airplanes.length
-            ]).draw();
-            $("#blogTable tbody td:contains('" + data.blogName + "')").parent().attr('value', data.id);
-        }
 
         var writeBlogUrl = $writeBlogBtn.attr("action");
         //var editBlogUrl = $editBlogForm.attr("action");
@@ -232,18 +225,19 @@
         });
 
         $deleteBlogBtn.on('click', function () {
-            if (confirm("确认删除当前选中的公司吗？")) {
-                var id = parseInt(table.$('tr.selected').attr('value'));
+            if (confirm("确认删除当前选中的文章吗？")) {
+                var id = table.$('tr.selected').attr('value');
+                console.log(id);
                 $.ajax({
                     type: 'POST',
                     url: 'blog/deleteBlog',
                     data: {
-                        blogId: id
+                        articleId: id
                     },
                     dataType: 'json',
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
+                    // beforeSend: function (xhr) {
+                    //     xhr.setRequestHeader(header, token);
+                    // },
                     success: function (data) {
                         console.log(data);
                         if (data.successful == true) {

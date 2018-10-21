@@ -15,5 +15,5 @@ import javax.transaction.Transactional;
 @Transactional(rollbackOn = Exception.class)
 public interface CategoryRepository extends JpaRepository<Category,String> {
 
-    Category findByDisplayName(String name);
+    Category findByName(String name);
 }

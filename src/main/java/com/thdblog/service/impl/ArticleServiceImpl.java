@@ -1,7 +1,9 @@
 package com.thdblog.service.impl;
 
 import com.thdblog.dao.ArticleRepository;
+import com.thdblog.dto.ServiceResult;
 import com.thdblog.entity.Article;
+import com.thdblog.entity.Category;
 import com.thdblog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,14 +40,22 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public List<Article> getArticleByCategoryName(String categoryName) {
-        List<Article> articles = articleRepository.findAllByCategory(categoryName);
+    public List<Article> getArticleByCategoryName(Category category) {
+        List<Article> articles = articleRepository.findAllByCategory(category);
         return articles;
     }
 
     @Override
-    public void delete(String id) {
+    public ServiceResult delete(String id) {
+        ServiceResult serviceResult;
         articleRepository.delete(id);
+        Article article = articleRepository.findOne(id);
+        if (null==article){
+            serviceResult = new ServiceResult(true,"博客删除成功!");
+        }else {
+            serviceResult = new ServiceResult(false,"博客删除失败!");
+        }
+        return serviceResult;
     }
 
     @Override

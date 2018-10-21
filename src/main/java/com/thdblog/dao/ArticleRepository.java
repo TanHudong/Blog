@@ -1,6 +1,7 @@
 package com.thdblog.dao;
 
 import com.thdblog.entity.Article;
+import com.thdblog.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article,String> {
 
     // 通过类型找到所有文章
-    List<Article> findAllByCategory(String category);
+    List<Article> findAllByCategory(Category category);
 
     // 通过标题找到所有文章
     List<Article> findAllByTitle(String title);

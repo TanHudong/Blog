@@ -38,3 +38,13 @@ admin/write.html中<br />
 **解决方法**：<br />
 出现原因： 因为在再表单提交中使用了 th:object="${article}", 所以需要在使用时，传入一个Article对象。
 否则将会报错。
+
+
+#数据表插入数据时报错
+        DataTables warning: table id=categoryTable - Requested unknown parameter '0' for row 2, column 0. For more information about this error, please see http://datatables.net/tn/4
+        
+        
+        
+        
+        
+**分类获取的链接组成：**/article/{categoryDisplayName}/{categoryName}

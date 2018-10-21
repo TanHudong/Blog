@@ -1,6 +1,8 @@
 package com.thdblog.service;
 
+import com.thdblog.dto.ServiceResult;
 import com.thdblog.entity.Article;
+import com.thdblog.entity.Category;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -29,16 +31,16 @@ public interface ArticleService {
 
     /**
      * 通过类型名称得到文章列表
-     * @param categoryName
+     * @param category 文章类型
      * @return
      */
-    public List<Article> getArticleByCategoryName(String categoryName);
+    public List<Article> getArticleByCategoryName(Category category);
 
     /**
      * 通过id删除文章
      * @param id
      */
-    public void delete(String id);
+    public ServiceResult delete(String id);
 
     /**
      * 保存文章

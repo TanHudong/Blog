@@ -29,6 +29,19 @@ public interface CategoryService {
     public ServiceResult createCategory(Category category);
 
     /**
+     * 删除一个类型通过id
+     * @param id 类型id
+     * @return 服务结果
+     */
+    public ServiceResult deleteCategoryById(String id);
+
+    /**
+     * 修改类型
+     * @param category 修改后的类型信息
+     * @return 服务结果
+     */
+    public ServiceResult modifyCategory(Category category);
+    /**
      * 通过id获取一个类型
      * @param id
      * @return

@@ -1,15 +1,16 @@
 package com.thdblog.controller;
 
+import com.thdblog.dto.ResponseResult;
+import com.thdblog.dto.ServiceResult;
 import com.thdblog.entity.Article;
 import com.thdblog.entity.Category;
 import com.thdblog.service.ArticleService;
 import com.thdblog.service.CategoryService;
+import javafx.beans.binding.ObjectExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,15 +50,26 @@ public class BlogController {
         return "admin/write";
     }
 
-    /**
-     * 删除博客
-     * @param id
-     * @return
-     */
-    @RequestMapping("delete/{id}")
-    public String delete(@PathVariable("id") String id){
-        articleService.delete(id);
-        return "redirect:/admin";
+//    /**
+//     * 删除博客
+//     * @param id
+//     * @return
+//     */
+//    @RequestMapping("deleteArticle/{id}")
+//    @ResponseBody
+//    public ResponseResult<Article> delete(@PathVariable("id") String id){
+//        ServiceResult serviceResult;
+//        serviceResult = articleService.delete(id);
+//        return ResponseResult.from(serviceResult);
+//    }
+
+    @RequestMapping(value = "/deleteBlog",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult<Article> delete(@RequestParam("articleId") String id){
+        ServiceResult serviceResult;
+        System.out.println("+++++++++++:"+id);
+        serviceResult = articleService.delete(id);
+        return ResponseResult.from(serviceResult);
     }
 
     @RequestMapping("update/{id}")
